@@ -1,199 +1,205 @@
-export default function LeitstelleDashboard() {
-  const [uhrzeit, setUhrzeit] = React.useState(new Date().toLocaleTimeString());
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leitstelle 112</title>
 
-  const [einsaetze, setEinsaetze] = React.useState([
-    {
-      id: 'FW-102',
-      typ: 'Feuerwehr',
-      ort: 'Stuttgart Mitte',
-      status: 'Status 3 – Einsatz übernommen',
-    },
-    {
-      id: 'POL-204',
-      typ: 'Polizei',
-      ort: 'Bad Cannstatt',
-      status: 'Status 4 – Am Einsatzort',
-    },
-    {
-      id: 'RD-311',
-      typ: 'Rettungsdienst',
-      ort: 'Vaihingen',
-      status: 'Status 2 – Einsatzbereit auf Wache',
-    },
-    ]);
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setUhrzeit(new Date().toLocaleTimeString());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const neuerEinsatz = () => {
-    const nummer = Math.floor(Math.random() * 999);
-
-    setEinsaetze([
-      ...einsaetze,
-      {
-        id: `NEU-${nummer}`,
-        typ: 'Feuerwehr',
-        ort: 'Berlin Neukölln',
-        status: 'Status 1 – Funk verfügbar',
-      },
-    ]);
-  };
-
-  return (
-    <div className="min-h-screen bg-zinc-950 text-white p-4 md:p-8">
-      <div className="max-w-7xl mx-auto space-y-6">
-        <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
-              Leitstelle 112
-            </h1>
-            <p className="text-zinc-400 mt-2">
-              Feuerwehr • Polizei • Rettungsdienst
-            </p>
-            <p className="text-blue-400 mt-2 font-semibold">
-              Uhrzeit: {uhrzeit}
-            </p>
-          </div>
-
-          <div className="flex gap-3">
-            <button className="bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-2xl font-semibold shadow-lg">
-              Alarm auslösen
-            </button>
-            <button
-              onClick={neuerEinsatz}
-              className="bg-zinc-800 hover:bg-zinc-700 transition px-5 py-3 rounded-2xl font-semibold"
-            >
-              Neuer Einsatz
-            </button>
-          </div>
-        </header>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-zinc-900 rounded-3xl p-6 shadow-xl border border-zinc-800">
-            <h2 className="text-lg font-semibold text-zinc-300">Aktive Einsätze</h2>
-            <p className="text-5xl font-bold mt-3">18</p>
-          </div>
-
-          <div className="bg-zinc-900 rounded-3xl p-6 shadow-xl border border-zinc-800">
-            <h2 className="text-lg font-semibold text-zinc-300">Fahrzeuge</h2>
-            <p className="text-5xl font-bold mt-3">42</p>
-          </div>
-
-          <div className="bg-zinc-900 rounded-3xl p-6 shadow-xl border border-zinc-800">
-            <h2 className="text-lg font-semibold text-zinc-300">Status</h2>
-            <p className="text-2xl font-bold mt-3 text-green-400">System Online</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 bg-zinc-900 rounded-3xl border border-zinc-800 p-6 shadow-xl">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold">Einsatzliste</h2>
-              <input
-                placeholder="Einsatz suchen..."
-                className="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2 outline-none w-48"
-              />
-            </div>
-
-            <div className="space-y-4">
-              {einsaetze.map((einsatz) => (
-                <div
-                  key={einsatz.id}
-                  className="bg-zinc-800 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3"
-                >
-                  <div>
-                    <p className="font-bold text-lg">{einsatz.id}</p>
-                    <p className="text-zinc-400">{einsatz.typ}</p>
-                  </div>
-
-                  <div>
-                    <p className="font-semibold">Ort</p>
-                    <p className="text-zinc-400">{einsatz.ort}</p>
-                  </div>
-
-                  <div>
-                    <p className="font-semibold">Status</p>
-                    <span className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm">
-                      {einsatz.status}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-zinc-900 rounded-3xl border border-zinc-800 p-6 shadow-xl">
-              <h2 className="text-2xl font-bold mb-4">Fahrzeugstatus</h2>
-
-              <div className="space-y-3">
-                <div className="bg-zinc-800 p-4 rounded-2xl flex justify-between items-center cursor-pointer hover:bg-zinc-700 transition">
-                  <div>
-                    <p className="font-semibold">LF 20-1</p>
-                    <p className="text-sm text-zinc-400">Feuerwehr</p>
-                  </div>
-                  <span className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm">
-                    Status 2 – Einsatzbereit auf Wache
-                  </span>
-                </div>
-
-                <div className="bg-zinc-800 p-4 rounded-2xl flex justify-between items-center">
-                  <div>
-                    <p className="font-semibold">FuStW 2-11</p>
-                    <p className="text-sm text-zinc-400">Polizei</p>
-                  </div>
-                  <span className="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full text-sm">
-                    Status 3 – Einsatz übernommen
-                  </span>
-                </div>
-
-                <div className="bg-zinc-800 p-4 rounded-2xl flex justify-between items-center">
-                  <div>
-                    <p className="font-semibold">RTW 5-83</p>
-                    <p className="text-sm text-zinc-400">Rettungsdienst</p>
-                  </div>
-                  <span className="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-sm">
-                    Status 4 – Am Einsatzort
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="bg-zinc-900 rounded-3xl border border-zinc-800 p-6 shadow-xl">
-              <h2 className="text-2xl font-bold mb-4">Funkkanäle</h2>
-
-              <div className="space-y-3">
-                <div className="bg-zinc-800 p-4 rounded-2xl flex justify-between">
-                  <span>FW Hauptkanal</span>
-                  <span className="text-green-400">Aktiv</span>
-                </div>
-
-                <div className="bg-zinc-800 p-4 rounded-2xl flex justify-between">
-                  <span>Polizei Süd</span>
-                  <span className="text-yellow-400">Bereit</span>
-                </div>
-
-                <div className="bg-zinc-800 p-4 rounded-2xl flex justify-between">
-                  <span>Rettungsdienst</span>
-                  <span className="text-blue-400">Online</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-zinc-900 rounded-3xl border border-zinc-800 p-6 shadow-xl">
-              <h2 className="text-2xl font-bold mb-4">Karte</h2>
-
-              <div className="h-64 rounded-2xl bg-zinc-800 flex items-center justify-center text-zinc-500">
-                Kartenbereich
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f0f0f;
+  color: white;
+  padding: 20px;
 }
+
+h1 {
+  margin-bottom: 5px;
+}
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+button {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.alarm {
+  background: #dc2626;
+  color: white;
+}
+
+.neu {
+  background: #27272a;
+  color: white;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background: #18181b;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.einsatz {
+  background: #27272a;
+  padding: 15px;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+
+.status {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+.s2 {
+  background: rgba(34,197,94,0.2);
+  color: #4ade80;
+}
+
+.s3 {
+  background: rgba(234,179,8,0.2);
+  color: #facc15;
+}
+
+.s4 {
+  background: rgba(239,68,68,0.2);
+  color: #f87171;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <h1>🚨 Leitstelle 112</h1>
+    <p>Feuerwehr • Polizei • Rettungsdienst</p>
+    <p id="uhr"></p>
+  </div>
+
+  <div>
+    <button class="alarm" onclick="alarm()">Alarm auslösen</button>
+    <button class="neu" onclick="neuerEinsatz()">Neuer Einsatz</button>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>Aktive Einsätze</h2>
+    <h1 id="anzahl">3</h1>
+  </div>
+
+  <div class="card">
+    <h2>Status</h2>
+    <h1 style="color:lime;">System Online</h1>
+  </div>
+</div>
+
+<div class="card" style="margin-top:20px;">
+  <h2>Einsatzliste</h2>
+
+  <div id="einsaetze">
+    <div class="einsatz">
+      <h3>FW-102</h3>
+      <p>Stuttgart Mitte</p>
+      <div class="status s3">Status 3 – Einsatz übernommen</div>
+    </div>
+
+    <div class="einsatz">
+      <h3>POL-204</h3>
+      <p>Bad Cannstatt</p>
+      <div class="status s4">Status 4 – Am Einsatzort</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:20px;">
+  <h2>Fahrzeugstatus</h2>
+
+  <div class="einsatz" onclick="statusWechsel(this)">
+    <h3>LF 20-1</h3>
+    <div class="status s2">Status 2 – Einsatzbereit auf Wache</div>
+  </div>
+
+  <div class="einsatz" onclick="statusWechsel(this)">
+    <h3>FuStW 2-11</h3>
+    <div class="status s3">Status 3 – Einsatz übernommen</div>
+  </div>
+
+  <div class="einsatz" onclick="statusWechsel(this)">
+    <h3>RTW 5-83</h3>
+    <div class="status s4">Status 4 – Am Einsatzort</div>
+  </div>
+</div>
+
+<script>
+function updateClock() {
+  const now = new Date();
+  document.getElementById('uhr').innerText = 'Uhrzeit: ' + now.toLocaleTimeString();
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+function alarm() {
+  alert('🚨 Alarm wurde ausgelöst!');
+}
+
+function neuerEinsatz() {
+  const container = document.getElementById('einsaetze');
+
+  const div = document.createElement('div');
+  div.className = 'einsatz';
+
+  div.innerHTML = `
+    <h3>NEU-${Math.floor(Math.random()*999)}</h3>
+    <p>Berlin Neukölln</p>
+    <div class="status s2">Status 1 – Funk verfügbar</div>
+  `;
+
+  container.appendChild(div);
+
+  const anzahl = document.getElementById('anzahl');
+  anzahl.innerText = parseInt(anzahl.innerText) + 1;
+}
+
+function statusWechsel(element) {
+  const status = element.querySelector('.status');
+
+  if(status.innerText.includes('Status 2')) {
+    status.innerText = 'Status 3 – Einsatz übernommen';
+    status.className = 'status s3';
+  }
+  else if(status.innerText.includes('Status 3')) {
+    status.innerText = 'Status 4 – Am Einsatzort';
+    status.className = 'status s4';
+  }
+  else {
+    status.innerText = 'Status 2 – Einsatzbereit auf Wache';
+    status.className = 'status s2';
+  }
+}
+</script>
+
+</body>
+</html>
