@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leitstelle 112</title>
+
+<style>
+body{
+font-family:Arial;
+background:#0f0f0f;
+color:white;
+margin:0;
+padding:20px;
+}
+
+.card{
+background:#1b1b1b;
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.status{
+padding:8px 14px;
+border-radius:20px;
+display:inline-block;
+margin-top:10px;
+}
+
+.s2{
+background:#1f3f1f;
+color:#7dff7d;
+}
+
+.s3{
+background:#4a3a00;
+color:#ffd54f;
+}
+
+.s4{
+background:#4a0000;
+color:#ff6b6b;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🚨 Leitstelle 112</h1>
+
+<div class="grid">
+
+<div class="card">
+<h2>LF 20-1</h2>
+<p>Feuerwehr</p>
+<div class="status s2">
+Status 2 – Einsatzbereit auf Wache
+</div>
+</div>
+
+<div class="card">
+<h2>FuStW 2-11</h2>
+<p>Polizei</p>
+<div class="status s3">
+Status 3 – Einsatz übernommen
+</div>
+</div>
+
+<div class="card">
+<h2>RTW 5-83</h2>
+<p>Rettungsdienst</p>
+<div class="status s4">
+Status 4 – Am Einsatzort
+</div>
+</div>
+
+</div>
+
+</body>
+</html>
