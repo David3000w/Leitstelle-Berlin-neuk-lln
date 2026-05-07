@@ -3,43 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leitstelle 112</title>
+<title>Leitstelle Berlin Leitstellen-System</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #0f0f0f;
+  background: #0b0f14;
   color: white;
   padding: 20px;
 }
 
-h1 {
-  margin-bottom: 5px;
+h1, h2, h3 {
+  margin: 0;
 }
 
-.topbar {
+.header {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
-button {
+.button {
   border: none;
   padding: 12px 18px;
   border-radius: 14px;
   cursor: pointer;
+  font-size: 16px;
   font-weight: bold;
 }
 
-.alarm {
+.red {
   background: #dc2626;
   color: white;
 }
 
-.neu {
+.gray {
   background: #27272a;
   color: white;
 }
@@ -52,16 +53,18 @@ button {
 }
 
 .card {
-  background: #18181b;
-  padding: 20px;
+  background: #161b22;
+  border: 1px solid #30363d;
   border-radius: 20px;
+  padding: 20px;
 }
 
 .einsatz {
-  background: #27272a;
-  padding: 15px;
+  background: #1c2128;
+  border-left: 4px solid #3b82f6;
   border-radius: 15px;
-  margin-top: 10px;
+  padding: 15px;
+  margin-top: 15px;
 }
 
 .status {
@@ -78,119 +81,151 @@ button {
 }
 
 .s3 {
-  background: rgba(234,179,8,0.2);
+  background: rgba(250,204,21,0.2);
   color: #facc15;
 }
 
 .s4 {
-  background: rgba(239,68,68,0.2);
+  background: rgba(248,113,113,0.2);
   color: #f87171;
 }
 </style>
 </head>
 <body>
 
-<div class="topbar">
+<div class="header">
   <div>
-    <h1>🚨 Leitstelle 112</h1>
-    <p>Feuerwehr • Polizei • Rettungsdienst</p>
-    <p id="uhr"></p>
+    <h1>🚨 Berliner Einsatzleitstelle</h1>
+    <p>BOS Leitstellen-System • Feuerwehr • Polizei • Rettungsdienst</p>
+    <p id="clock"></p>
   </div>
 
   <div>
-    <button class="alarm" onclick="alarm()">Alarm auslösen</button>
-    <button class="neu" onclick="neuerEinsatz()">Neuer Einsatz</button>
+    <button class="button red" onclick="alarmMeldung()">Alarm auslösen</button>
+    <button class="button gray" onclick="neuerEinsatz()">Neuer Einsatz</button>
   </div>
 </div>
 
 <div class="grid">
   <div class="card">
+    <h2>Notrufe</h2>
+    <h1>27</h1>
+    <p style="color:#9ca3af;">Heute eingegangen</p>
+  </div>
+  <div class="card">
     <h2>Aktive Einsätze</h2>
-    <h1 id="anzahl">3</h1>
+    <h1 id="einsatzZahl">2</h1>
   </div>
 
   <div class="card">
-    <h2>Status</h2>
-    <h1 style="color:lime;">System Online</h1>
+    <h2>Leitstellenstatus</h2>
+    <h1 style="color:lime;">Online</h1>
   </div>
 </div>
 
 <div class="card" style="margin-top:20px;">
-  <h2>Einsatzliste</h2>
+  <h2>Aktuelle Einsatzübersicht</h2>
 
-  <div id="einsaetze">
+  <div id="einsatzContainer">
     <div class="einsatz">
       <h3>FW-102</h3>
-      <p>Stuttgart Mitte</p>
+      <p>Berlin Neukölln • Sonnenallee</p>
       <div class="status s3">Status 3 – Einsatz übernommen</div>
     </div>
 
     <div class="einsatz">
       <h3>POL-204</h3>
-      <p>Bad Cannstatt</p>
+      <p>Berlin Mitte • Alexanderplatz</p>
       <div class="status s4">Status 4 – Am Einsatzort</div>
     </div>
   </div>
 </div>
 
 <div class="card" style="margin-top:20px;">
-  <h2>Fahrzeugstatus</h2>
+  <h2>Fahrzeug- und Funkstatus</h2>
+  <p style="color:#9ca3af;">Klicken zum Status wechseln</p>
 
-  <div class="einsatz" onclick="statusWechsel(this)">
+  <div class="einsatz" onclick="wechselStatus(this)">
     <h3>LF 20-1</h3>
     <div class="status s2">Status 2 – Einsatzbereit auf Wache</div>
   </div>
 
-  <div class="einsatz" onclick="statusWechsel(this)">
+  <div class="einsatz" onclick="wechselStatus(this)">
     <h3>FuStW 2-11</h3>
     <div class="status s3">Status 3 – Einsatz übernommen</div>
   </div>
 
-  <div class="einsatz" onclick="statusWechsel(this)">
+  <div class="einsatz" onclick="wechselStatus(this)">
     <h3>RTW 5-83</h3>
     <div class="status s4">Status 4 – Am Einsatzort</div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:20px;">
+  <h2>Funkkanäle</h2>
+
+  <div class="einsatz">
+    <h3>FW Hauptkanal</h3>
+    <div class="status s2">Aktiv</div>
+  </div>
+
+  <div class="einsatz">
+    <h3>Polizei Süd</h3>
+    <div class="status s3">Belegt</div>
+  </div>
+
+  <div class="einsatz">
+    <h3>Rettungsdienst</h3>
+    <div class="status s2">Online</div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:20px;">
+  <h2>Kartenbereich</h2>
+  <div style="height:250px;background:#0d1117;border-radius:15px;display:flex;align-items:center;justify-content:center;color:#6b7280;margin-top:15px;">
+    Live-Karte der Leitstelle
   </div>
 </div>
 
 <script>
 function updateClock() {
   const now = new Date();
-  document.getElementById('uhr').innerText = 'Uhrzeit: ' + now.toLocaleTimeString();
+  document.getElementById('clock').innerText = 'Uhrzeit: ' + now.toLocaleTimeString();
 }
 
 setInterval(updateClock, 1000);
 updateClock();
 
-function alarm() {
+function alarmMeldung() {
   alert('🚨 Alarm wurde ausgelöst!');
 }
 
 function neuerEinsatz() {
-  const container = document.getElementById('einsaetze');
+  const container = document.getElementById('einsatzContainer');
 
-  const div = document.createElement('div');
-  div.className = 'einsatz';
+  const neuer = document.createElement('div');
+  neuer.className = 'einsatz';
 
-  div.innerHTML = `
+  neuer.innerHTML = `
     <h3>NEU-${Math.floor(Math.random()*999)}</h3>
-    <p>Berlin Neukölln</p>
+    <p>Berlin Neukölln • Sonnenallee</p>
     <div class="status s2">Status 1 – Funk verfügbar</div>
   `;
 
-  container.appendChild(div);
+  container.appendChild(neuer);
 
-  const anzahl = document.getElementById('anzahl');
-  anzahl.innerText = parseInt(anzahl.innerText) + 1;
+  const zahl = document.getElementById('einsatzZahl');
+  zahl.innerText = parseInt(zahl.innerText) + 1;
 }
 
-function statusWechsel(element) {
+function wechselStatus(element) {
   const status = element.querySelector('.status');
 
-  if(status.innerText.includes('Status 2')) {
+  if (status.innerText.includes('Status 2')) {
     status.innerText = 'Status 3 – Einsatz übernommen';
     status.className = 'status s3';
   }
-  else if(status.innerText.includes('Status 3')) {
+  else if (status.innerText.includes('Status 3')) {
     status.innerText = 'Status 4 – Am Einsatzort';
     status.className = 'status s4';
   }
